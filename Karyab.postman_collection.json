@@ -1,0 +1,2408 @@
+{
+	"info": {
+		"_postman_id": "9c6cd1ad-c158-46bc-aa08-c3b2215aee3b",
+		"name": "Karyab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17770529"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "عرفان رهبری",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "erfan@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Erfan0938",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "نام یارو",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "six@one.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "Asd123***",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"message\": \"فیلد نام الزامی است (and 2 more errors)\",\n    \"errors\": {\n        \"name\": [\n            \"فیلد نام الزامی است\"\n        ],\n        \"email\": [\n            \"فیلد پست الکترونیکی الزامی است\"\n        ],\n        \"password\": [\n            \"فیلد رمز عبور الزامی است\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "نام یارو",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "six@one.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Asd123***",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"token_type\": \"Bearer\",\n    \"expires_in\": 31536000,\n    \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI2IiwianRpIjoiNjYyZWI2ZDQwZGJlYzk3YzcxMGU3NmU5YjEyYWVlZjFlMjAwZDhjNWNjZjM3YTEwNjk1NzdlMjY2NDQ1NDgxMGJiZGU3NDQyYmEzZjU4YjkiLCJpYXQiOjE2NzM4Njk2OTAuNDM3NjEyLCJuYmYiOjE2NzM4Njk2OTAuNDM3NjE0LCJleHAiOjE3MDU0MDU2OTAuNDI3OTE2LCJzdWIiOiI3Iiwic2NvcGVzIjpbIioiXX0.CnRfdUcZlXr-zIvEYUNZSaHI53B7YGQon7_NBRyE8_w9jiSYe0i_creigynhh58OcMR2FFGRq0oAgXAPTpOu6Vy-ndIG0OuXVcpLKFPUOU7Tat_t7FZYuyqXaE7Ovd9X-pttHSt9CZHgAbiUS7qo84-LeQckVNvWmYc6dqCI3022QkHG36E6zjq3XqcXiV9EVDCVa7xia0RV7jn1nN6UJ8NIn7IFuRY0GeefLePR3EiZ20kI8AuXBKSKY1LcYUXFimCcGd4vmtkGVJ3izQ14w9ZlJkGAWt2oZ3x4OXx51rmoDf7q3iWf94jxTvfe42YEFm9SXQRz5sMFCoFUEsV65eiZ6s8WLB-FMydxTNTDs62pMh7QbKBql3_BQHIJfadMyL00WTz1w7K3NBOJ75T-xoeWOUSYJQCbD5S51au7IbCb0aO-RYI46MXfuLGw4ThOHEyCX9JRxB1tJ7ihXX8VtrNFSELoSwyFoYudPlUHEGVrfrFJlqLW2bkfHxMD2l9exQHJZ9jy2GuXIhN50gr_rTOt2zqRXNxUD64HFdgfGZ6ald3XvTJE9lToTkCGWjgCTEEiW-VQbDKINvdOm7aqya1iw6k0A40XgRk9-YfGvTY0t-s8subs7OVbFkHOAB4JESYM-84tVs8Awk2d7b2t5fkrD69XgoRZVBiu0f8O-Kk\",\n    \"refresh_token\": \"def502001045a81583c2a6e2cbf8cedab43c3c513e631b3365c2792d9efbc32d6e721111ddb016387ed691602043364af84e804e6c6d9ba724f00355bfa500201cd0e1f0e0c8dffbfe9d8c388cdaf3a5c19ba64603b107a3c76ed6fe250a450232af3ed17b592e5bbd22446caa8abb1d7d243850aac6af4916e25500fe29bdfb41a463160cd93a55cccacf9769f11bf2db90a42220ebf60b6e93b04ddbffa8ae7dd98584d23276c1bb35eccae3c817dc1d5b7293459f3caebcac7c48ee6782de84e44030492397b297f19dc4b7453c14a4570d45e3dc1d999415f2ac86c40368329700962f904fa05638c24782c226db093b7444532b195a918df838e52a149581518ffd08796ba3bad1d4799bd24bd025e65da90a67b08f2d766eba27827587f1a23d7f55c5ad4c207be83bcafbd501425e142fe52954f145af5e5f43e06bd2a0635cb0afd617e5216f9fabf3d2f6018493607b608f5834e5aa1374138e6567a5ebfeed\",\n    \"user\": {\n        \"email\": \"seven@one.com\",\n        \"name\": \"نام یارو\",\n        \"updated_at\": \"2023-01-16T11:48:10.000000Z\",\n        \"created_at\": \"2023-01-16T11:48:10.000000Z\",\n        \"id\": 7\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "refresh_token",
+									"value": "def50200bc8f5b52a5150b9b05977e29acd992cdaada31d06de6aafaba7b99f5aa4c2b380850da101442974bc94b97e283437addcde399dce58dad8ec70386e75b41155a2250133ea8ada7e4148312c9baf9023e09ac654512841137a29073bea7934aaf60c53157bdd24b1c0510ea6cc7a99c25fef48dda3c5a78491f3594531e184896d3de187bb8150693b5f707ddc291f2e87d6b6195a92fac18f12587a7ab16c8b3fde45d91b42d921e5a6bdd50a731c94908a1f75f91ee0c10f3979a676a3ec37256b8dfc064e0431a4650862218e092a1504998b1f6c1544eaf935b46ead7a2f08c3a738254d058fc955528a7d8d98ffad73ae96c7b39f48d35390f3966dcdeb5ef00d36555087cbff5b01b910de6d124342e4298392a714ba28b3086aa47068f26734c9092740d2974758cb06cf8b19edaf60286b54f25797026a3b729fb100f451dfb787d360029f2169bceb95dd92a3343c8e04ab04804076df867d65612fc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/login/refresh",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"login",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.set(\"token\", pm.response.json().access_token);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "one@one.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Asd123***",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Validate Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "نام یارو",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "email",
+											"value": "six@one.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "Asd123***",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "نام یارو",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "six@one.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "Asd123***",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/register",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"token_type\": \"Bearer\",\n    \"expires_in\": 31536000,\n    \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI2IiwianRpIjoiNjYyZWI2ZDQwZGJlYzk3YzcxMGU3NmU5YjEyYWVlZjFlMjAwZDhjNWNjZjM3YTEwNjk1NzdlMjY2NDQ1NDgxMGJiZGU3NDQyYmEzZjU4YjkiLCJpYXQiOjE2NzM4Njk2OTAuNDM3NjEyLCJuYmYiOjE2NzM4Njk2OTAuNDM3NjE0LCJleHAiOjE3MDU0MDU2OTAuNDI3OTE2LCJzdWIiOiI3Iiwic2NvcGVzIjpbIioiXX0.CnRfdUcZlXr-zIvEYUNZSaHI53B7YGQon7_NBRyE8_w9jiSYe0i_creigynhh58OcMR2FFGRq0oAgXAPTpOu6Vy-ndIG0OuXVcpLKFPUOU7Tat_t7FZYuyqXaE7Ovd9X-pttHSt9CZHgAbiUS7qo84-LeQckVNvWmYc6dqCI3022QkHG36E6zjq3XqcXiV9EVDCVa7xia0RV7jn1nN6UJ8NIn7IFuRY0GeefLePR3EiZ20kI8AuXBKSKY1LcYUXFimCcGd4vmtkGVJ3izQ14w9ZlJkGAWt2oZ3x4OXx51rmoDf7q3iWf94jxTvfe42YEFm9SXQRz5sMFCoFUEsV65eiZ6s8WLB-FMydxTNTDs62pMh7QbKBql3_BQHIJfadMyL00WTz1w7K3NBOJ75T-xoeWOUSYJQCbD5S51au7IbCb0aO-RYI46MXfuLGw4ThOHEyCX9JRxB1tJ7ihXX8VtrNFSELoSwyFoYudPlUHEGVrfrFJlqLW2bkfHxMD2l9exQHJZ9jy2GuXIhN50gr_rTOt2zqRXNxUD64HFdgfGZ6ald3XvTJE9lToTkCGWjgCTEEiW-VQbDKINvdOm7aqya1iw6k0A40XgRk9-YfGvTY0t-s8subs7OVbFkHOAB4JESYM-84tVs8Awk2d7b2t5fkrD69XgoRZVBiu0f8O-Kk\",\n    \"refresh_token\": \"def502001045a81583c2a6e2cbf8cedab43c3c513e631b3365c2792d9efbc32d6e721111ddb016387ed691602043364af84e804e6c6d9ba724f00355bfa500201cd0e1f0e0c8dffbfe9d8c388cdaf3a5c19ba64603b107a3c76ed6fe250a450232af3ed17b592e5bbd22446caa8abb1d7d243850aac6af4916e25500fe29bdfb41a463160cd93a55cccacf9769f11bf2db90a42220ebf60b6e93b04ddbffa8ae7dd98584d23276c1bb35eccae3c817dc1d5b7293459f3caebcac7c48ee6782de84e44030492397b297f19dc4b7453c14a4570d45e3dc1d999415f2ac86c40368329700962f904fa05638c24782c226db093b7444532b195a918df838e52a149581518ffd08796ba3bad1d4799bd24bd025e65da90a67b08f2d766eba27827587f1a23d7f55c5ad4c207be83bcafbd501425e142fe52954f145af5e5f43e06bd2a0635cb0afd617e5216f9fabf3d2f6018493607b608f5834e5aa1374138e6567a5ebfeed\",\n    \"user\": {\n        \"email\": \"seven@one.com\",\n        \"name\": \"نام یارو\",\n        \"updated_at\": \"2023-01-16T11:48:10.000000Z\",\n        \"created_at\": \"2023-01-16T11:48:10.000000Z\",\n        \"id\": 7\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "My info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Permissions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/permissions",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Complation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "user",
+									"description": "user , company , enployer",
+									"type": "text"
+								},
+								{
+									"key": "nationalCode",
+									"value": "1234567891",
+									"description": "برای user و enpmloyer",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "09132043402",
+									"description": "برای user",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "1",
+									"description": "برای user",
+									"type": "text"
+								},
+								{
+									"key": "province",
+									"value": "1",
+									"description": "برای user",
+									"type": "text"
+								},
+								{
+									"key": "about",
+									"value": "asdlfasd;lkfjasd;lfjasd;lfj",
+									"description": "برای user",
+									"type": "text"
+								},
+								{
+									"key": "certificates[0][field]",
+									"value": "diploma",
+									"description": "in:diploma,associate,bachelor,doctor,post - برای user",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"value": "asslfdkjasdf",
+									"description": "برای user و company",
+									"type": "text"
+								},
+								{
+									"key": "skills[0]",
+									"value": "1",
+									"description": "برای user",
+									"type": "text"
+								},
+								{
+									"key": "phones[0]",
+									"value": "09102003040",
+									"description": "ارایه ای - برای employer و company",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "asd;lfkkjasd;lfkj",
+									"description": "برای company",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "asdlfjk;hasddf;ljasddf;lkjasdf;lkjasdf;lkjasddf",
+									"description": "برای company بین ۲ تا ۱۰۲۴ کراکتر",
+									"type": "text"
+								},
+								{
+									"key": "background",
+									"value": "asdfasddfasddfasdfasddf",
+									"description": "پیشینه برای compnay و employer",
+									"type": "text"
+								},
+								{
+									"key": "licence_code",
+									"value": "321341234",
+									"description": "برای employer",
+									"type": "text"
+								},
+								{
+									"key": "licence_document",
+									"value": "asdfasdfasf",
+									"description": "رشته یا فایل - برای employer",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "active",
+									"description": "فقط ادمین و باید بین draft,pending,active,disable باشد.",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "1",
+									"description": "تنها برای ادمین و برای ویرایش دیگر کاربران استفاده میشود.",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/userCompletion",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"userCompletion"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resume",
+			"item": [
+				{
+					"name": "My List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/resume",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resume"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Resume",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "the name of my resume",
+									"type": "text"
+								},
+								{
+									"key": "data",
+									"value": "adlfkjassd;lfkjas;sldfjas;ldkfja;lskddfj;lasdjf",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "publish",
+									"description": "draft , publish , disable , redirect",
+									"type": "text"
+								},
+								{
+									"key": "redirect_to",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/resume",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resume"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Resume",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Method",
+								"value": "PUT",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "adsfasfsdf",
+									"type": "text"
+								},
+								{
+									"key": "data",
+									"value": "asdfasdfasdfasdfasdfddddddddddddddd",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "redirect",
+									"type": "text"
+								},
+								{
+									"key": "redirect_to",
+									"value": "2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/resume/:resume_id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resume",
+								":resume_id"
+							],
+							"variable": [
+								{
+									"key": "resume_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete resume",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/resume/:resume_id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resume",
+								":resume_id"
+							],
+							"variable": [
+								{
+									"key": "resume_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show For Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/resume/:resume_id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resume",
+								":resume_id"
+							],
+							"variable": [
+								{
+									"key": "resume_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show For Other User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/resume/show/:resume_id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resume",
+								"show",
+								":resume_id"
+							],
+							"variable": [
+								{
+									"key": "resume_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my requests to recruitments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/resumeRequest",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resumeRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sent resume to a recruitment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "recruitment_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "resume_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/resumeRequest",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resumeRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete resume request  to a recruitment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/resumeRequest/0?recruitment_id=2&resume_id=3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"resumeRequest",
+								"0"
+							],
+							"query": [
+								{
+									"key": "recruitment_id",
+									"value": "2"
+								},
+								{
+									"key": "resume_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recruitment",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/recruitment",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitment"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "",
+									"description": "current pagination page",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "keyword to search",
+									"disabled": true
+								},
+								{
+									"key": "length",
+									"value": "",
+									"description": "pagination length",
+									"disabled": true
+								},
+								{
+									"key": "column",
+									"value": "",
+									"description": "column to order",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "",
+									"description": "asc,desc",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "accept",
+									"disabled": true
+								},
+								{
+									"key": "salaryFrom",
+									"value": "20",
+									"description": "starting Salary value",
+									"disabled": true
+								},
+								{
+									"key": "salaryTo",
+									"value": "10000",
+									"description": "ending Salary value",
+									"disabled": true
+								},
+								{
+									"key": "created_at",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "updated_at",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "province",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/recruitment/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Recruitment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "تایتلش",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "توضیحات بیخودش",
+									"type": "text"
+								},
+								{
+									"key": "skills[0]",
+									"value": "1",
+									"description": "شناسه skil ها باید یه صورت ارایه ای به سرور ارسال شود",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"description": "اختیاری",
+									"type": "file",
+									"src": "/home/mohammad/Pictures/Screenshot from 2022-09-30 20-10-29.png"
+								},
+								{
+									"key": "salary",
+									"value": "500000",
+									"type": "text"
+								},
+								{
+									"key": "categories[0]",
+									"value": "1",
+									"description": "شناسه دسته بندی باید به صورت دسته ارایه ای برای کاربر ارسال شود",
+									"type": "text"
+								},
+								{
+									"key": "province[0]",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "contract",
+									"value": "تمام وقت",
+									"type": "text"
+								},
+								{
+									"key": "experience",
+									"value": "۲ سال",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "برنامه نویس ارشد",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/recruitment",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a recruitment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "تایتلشdfasf",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "توضیحات بیخودش 2",
+									"type": "text"
+								},
+								{
+									"key": "skills[0]",
+									"value": "1",
+									"description": "شناسه skil ها باید یه صورت ارایه ای به سرور ارسال شود",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"description": "اختیاری",
+									"type": "file",
+									"src": "/home/mohammad/Pictures/Screenshot from 2022-09-30 20-10-49.png"
+								},
+								{
+									"key": "salary",
+									"value": "500000",
+									"type": "text"
+								},
+								{
+									"key": "categories[0]",
+									"value": "1",
+									"description": "شناسه دسته بندی باید به صورت دسته ارایه ای برای کاربر ارسال شود",
+									"type": "text"
+								},
+								{
+									"key": "province[0]",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "contract",
+									"value": "تمام وقت",
+									"type": "text"
+								},
+								{
+									"key": "experience",
+									"value": "۲ سال",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "برنامه نویس ارشد",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"description": "باید ارسال شود تا به عنوان put شناخته شود.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/recruitment/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a recruitment status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/recruitment/status/:id?status=pending",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitment",
+								"status",
+								":id"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending",
+									"description": "closed.draft,pending,publish"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a recruitment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/recruitment/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitment",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show recuitment resumes requests",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/recruitmentRequest/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitmentRequest",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recuitment request change status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "recruitment_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "resume_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "see",
+									"description": "see , accept , reject",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/recruitmentRequest",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"recruitmentRequest"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Skills",
+			"item": [
+				{
+					"name": "Get Skills",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/skill",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/skill?name=java&description=bpl",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"skill"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "java",
+									"description": "رشته - بین ۲ تا ۲۰۰ کراکتر"
+								},
+								{
+									"key": "description",
+									"value": "bpl",
+									"description": "دلخواه - رشته - بین ۲ تا ۲۰۰ کراکتر"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/skill/2?name=salam&description=bpl",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"skill",
+								"2"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "salam",
+									"description": "رشته - بین ۲ تا ۲۰۰ کراکتر"
+								},
+								{
+									"key": "description",
+									"value": "bpl",
+									"description": "دلخواه - رشته - بین ۲ تا ۲۰۰ کراکتر"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show a Skill With Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/skill/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"skill",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Skill",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/skill/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"skill",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/category",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/category?name=java",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"category"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "java",
+									"description": "رشته - بین ۲ تا ۲۰۰ کراکتر"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/category/:id?name=salam",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"category",
+								":id"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "salam",
+									"description": "رشته - بین ۲ تا ۲۰۰ کراکتر"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show a category With Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/category/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"category",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/category/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"category",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "City & Province",
+			"item": [
+				{
+					"name": "All Provinces",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/province",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"province"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/admin/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "the name of my resume",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "erfan23@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "role",
+											"value": "admin",
+											"description": "if not sent default role which is basic will be set for user",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "password",
+											"value": "asd123@!",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/admin/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Method",
+										"value": "PUT",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "mamd",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "mamad@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "role",
+											"value": "admin",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "active",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{URL}}/admin/users/:user_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/resume/:resume_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"resume",
+										":resume_id"
+									],
+									"variable": [
+										{
+											"key": "resume_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/admin/users/:user_id",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Events Log",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/eventlog",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"eventlog"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/eventlog/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"eventlog",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pages",
+			"item": [
+				{
+					"name": "get Pages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/page",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create or update page",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"value": "any data in here",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/page",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create or update page for other users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "_method",
+								"value": "PUT",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{URL}}/page/:user_id?data=asfdasdfasdfasdfasd",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"page",
+								":user_id"
+							],
+							"query": [
+								{
+									"key": "data",
+									"value": "asfdasdfasdfasdfasd"
+								}
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show a page",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/page/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"page",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Main Page",
+			"item": [
+				{
+					"name": "report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/report",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/companies",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add('Accept:application/json');"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
