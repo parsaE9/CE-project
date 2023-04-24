@@ -27,7 +27,6 @@ class AdminController extends Controller
 
     public function index()
     {
-        authorize_action('admin_list', true);
         $admins = $this->adminRepository->all();
         return view('admin.admins.index')->with('admins', $admins);
     }
@@ -35,7 +34,6 @@ class AdminController extends Controller
 
     public function create()
     {
-        authorize_action('admin_create', true);
         $privileges = $this->privilegeRepository->all();
         return view('admin.admins.create')->with('privileges', $privileges);
     }
@@ -65,7 +63,6 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        authorize_action('admin_delete', true);
         $this->adminServices->delete($id);
         return redirect()->route('admins.index');
     }
