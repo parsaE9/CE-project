@@ -24,7 +24,9 @@ class RecruitmentRequestStoreRequest extends FormRequest
     public function rules()
     {
         return [
-           null
+            'recruitment_id' => ['required' , 'exists:recruitments,id'],
+            'resume_id' => ['required' , 'exists:resumes,id'],
+            'status' => ['required' , 'in:see,accept,reject']
         ];
     }
 }
