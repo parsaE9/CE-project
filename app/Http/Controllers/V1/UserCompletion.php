@@ -37,26 +37,30 @@ class UserCompletion extends Controller
             $user = User::query()->findOrFail($request->get('user_id'));
         }
 
-        PermissionHelper::abort_if_unless_permission($user->data_type ? 'user_completion_update' : 'user_completion_store');
+        PermissionHelper::abort_if_unless_permission($user->type_data ? 'user_completion_update' : 'user_completion_store');
 
         FileHelper::UploadAllowFields($request , ['avatar', 'licence_document']);
 
         if ($user->status == "draft"){
             $user->status = match ($request->get('type')){
                 'user' => User::STATUS_ACTIVE,
-                default => User::STATUS_PENDING
+//                default => User::STATUS_PENDING
+                default => User::STATUS_ACTIVE
             };
         }else if ($user->status != "user"){
-            $user->status = User::STATUS_PENDING;
+//            $user->status = User::STATUS_PENDING;
+            $user->status = User::STATUS_ACTIVE;
         }
 
-        if ($request->has('status')){
-            $user->status = $request->get('status');
-            $user->roles()->delete();
+        if ($request->has('status') || $user->status == User::STATUS_ACTIVE){
+//            $user->status = $request->get('status');
+            $user->status = User::STATUS_ACTIVE;
+            $user->roles()->detach();
             $user->attachRole(PermissionHelper::get_role('basic'));
 
-            if ($request->get('status') == User::STATUS_ACTIVE){
-                switch ($user->type_data['type']){
+            if ($user->status == User::STATUS_ACTIVE){
+
+                switch ($request->get('type')){
                     case "employer":
                         $user->attachRole(PermissionHelper::get_role('employer'));
                         break;
@@ -71,7 +75,10 @@ class UserCompletion extends Controller
         }
 
         $user->type = $request->get('type');
-        $user->type_data = $request->only(array_keys($request->rules()));
+        $user->type_data = $request->only(array_filter(array_keys($request->rules()), function ($k) {
+            return !str_contains($k , "*");
+        }
+        ));
         $user->save();
 
         return $user;

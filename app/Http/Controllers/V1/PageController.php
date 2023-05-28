@@ -79,10 +79,14 @@ class PageController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($page)
     {
-        return Page::query()->where('user_id' , $page)->firstOrFail()->data;
+        $page = Page::query()->where('user_id' , $page)->with('users')->firstOrFail();
+        return response()->json(array_merge($page->data , [
+            'users' => '',
+            'type' => $page->users->type
+        ]));
     }
 }

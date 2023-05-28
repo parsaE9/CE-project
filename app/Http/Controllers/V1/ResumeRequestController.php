@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
+use App\Helpers\NotificationHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResumeListRequest;
@@ -27,19 +28,24 @@ class ResumeRequestController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        return $user->requests()->advancedFilter();
+        return $user->requests()->paginate();
 
-//        $ids = $user->resumes()->pluck('id');
-//
-//        $query = Recruitment::query()->whereHas('requests' , function ($q) use ($ids){
-//            return $q->whereIn('id' , $ids);
-//        })->with('user');
-//
-//        if (! PermissionHelper::check_permission('resume_request_list')){
-//            $query = $query->where('id' , Auth::id());
-//        }
-//
-//        return $query->advancedFilter(\Illuminate\Support\Facades\Request::all());
+    }
+
+    public function indexAll()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return $user->requests()->get()->map(function($v){
+            return [
+                'id'=>$v->id,
+                'resume_id' => $v->pivot->resume_id,
+                'request_status'=>$v->request_status,
+                'requested_at'=>$v->requested_at
+            ];
+        });
+
     }
 
     /**
@@ -55,6 +61,28 @@ class ResumeRequestController extends Controller
 
         /** @var Recruitment $recruitment */
         $recruitment = Recruitment::query()->find($request->get('recruitment_id'));
+
+        dispatch(function () use ($request, $resume,$recruitment) {
+            $userEmail = User::find($resume->user_id)->email;
+            if ($userEmail) {
+                NotificationHelper::createNotificationWithEmail($userEmail, $resume->user_id, 'ارسال درخواست', "درخواست شما با موفقیت برای شرکت $resume->name ارسال شد.");
+            }
+
+            $userReqruimentEmail = User::find($recruitment->user_id)->email;
+
+            if ($userReqruimentEmail) {
+                NotificationHelper::createNotificationWithEmail($userReqruimentEmail, $recruitment->user_id, 'درخواست جدید برای آگهی', "درخواست جدید برای کار شما ارسال شده است.");
+            }
+
+
+        })->afterResponse();
+
+
+//        todo: 2 notifs has to be sent
+//        todo 1=> resume->user id your request successfuly sent to karfarma
+//        todo 2=> recruiment->user id darkhast baraye agahi shoma tvsote shakhse folan ersal shod
+//
+//
 
         $recruitment->requests()->syncWithoutDetaching([$resume->id => ['user_id' => $resume->user_id , 'created_at' => now()]]);
     }

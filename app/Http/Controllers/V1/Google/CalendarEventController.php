@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\V1\Google;
 
 use App\Helpers\GoogleCalendar;
+use App\Helpers\NotificationHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CalendarEvnetRequest;
 use App\Http\Requests\CalendarUpdateEvnetRequest;
+use App\Http\Resources\EventResource;
+use App\Models\Event;
 use App\Models\GoogleCalendarToken;
 use App\Models\User;
+use Carbon\Carbon;
 use Google\Service\AIPlatformNotebooks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,8 +33,7 @@ class CalendarEventController extends Controller
             PermissionHelper::abort_if_unless_permission('getUserEventList');
             $user = Auth::user();
         }
-
-        return GoogleCalendar::getEvents($user->tokens()->where('type', GoogleCalendarToken::TYPE_CALENDAR)->firstOrFail()->calendar_id);
+        return EventResource::collection(Event::query()->where('owner_id' , $user->id)->get());
     }
 
     /**
@@ -41,16 +44,36 @@ class CalendarEventController extends Controller
      */
     public function store(CalendarEvnetRequest $request)
     {
-        if ($request->has('user_id')){
-            PermissionHelper::abort_if_unless_permission('createEvent');
+        if ($request->has('owner_id')){
+            PermissionHelper::abort_if_unless_permission('createEventForOtherUser');
             $user = User::query()->findOrFail($request->get('user_id'));
         }else{
-            PermissionHelper::abort_if_unless_permission('createEventForOtherUser');
+            PermissionHelper::abort_if_unless_permission('createEvent');
             $user = Auth::user();
         }
-        $calendar_id = $user->tokens()->where('type' , GoogleCalendarToken::TYPE_CALENDAR)->firstOrFail()->calendar_id;
+        $userReserve = User::query()->findOrFail($request->get('user_id'));
+        $text = "{$userReserve->name} ({$userReserve->type_data['phone']})";
+        $model = Event::create([
+            'text'=>$text,
+            'owner_id' => $user->id,
+            ...$request->only(['user_id',"start","end",'resource'])
+        ]);
+        if ($model){
+            $time = \Morilog\Jalali\Jalalian::forge($model->start)->format('H:i');
+            $date = \Morilog\Jalali\Jalalian::forge($model->resource)->format('Y/m/d ');
 
-        return GoogleCalendar::createEvent($calendar_id , $request->only(['summary' , 'location' , 'description' , 'start.dateTime' , 'start.timeZone' , 'end.dateTime' , 'end.timeZone']));
+            NotificationHelper::createNotificationWithEmail($userReserve, $request->get('user_id'), 'نوبتی برای شما ثبت شد', "{$user->name} یک نوبت برای شما در تاریخ {$date} {$time} ثبت کرد");
+        }
+
+        return $model;
+    }
+
+    public function other(Request $request)
+    {
+        abort_unless($request->has('national_code'), 404);
+        PermissionHelper::abort_if_unless_permission('createEvent');
+
+        return User::query()->where('type_data->nationalCode', $request->get('national_code'))->select(['id','name', 'type_data->phone as phone'])->firstOrFail();
     }
 
     /**
@@ -61,19 +84,19 @@ class CalendarEventController extends Controller
      */
     public function show($id , $user_id = false)
     {
-        if ($user_id){
-            PermissionHelper::abort_if_unless_permission('showEvent');
-            $user = User::query()->findOrFail($user_id);
-        }else{
-            PermissionHelper::abort_if_unless_permission('showEventForOtherUser');
-            $user = Auth::user();
-        }
-        $calendar_id = $user->tokens()->where('type' , GoogleCalendarToken::TYPE_CALENDAR)->firstOrFail()->calendar_id;
-        try {
-            return response()->json(GoogleCalendar::getEvent($calendar_id , $id));
-        }catch (\Exception $e){
-            abort(404);
-        }
+//        if ($user_id){
+//            PermissionHelper::abort_if_unless_permission('showEvent');
+//            $user = User::query()->findOrFail($user_id);
+//        }else{
+//            PermissionHelper::abort_if_unless_permission('showEventForOtherUser');
+//            $user = Auth::user();
+//        }
+//        $calendar_id = $user->tokens()->where('type' , GoogleCalendarToken::TYPE_CALENDAR)->firstOrFail()->calendar_id;
+//        try {
+//            return response()->json(GoogleCalendar::getEvent($calendar_id , $id));
+//        }catch (\Exception $e){
+//            abort(404);
+//        }
     }
 
     /**
@@ -85,20 +108,23 @@ class CalendarEventController extends Controller
      */
     public function update(CalendarUpdateEvnetRequest $request, $id )
     {
-        if ($request->has('user_id')){
+        if ($request->has('owner_id')){
             PermissionHelper::abort_if_unless_permission('updateEvent');
-            $user = User::query()->findOrFail($request->get('user_id'));
+            $user = User::query()->findOrFail($request->get('owner_id'));
         }else{
             PermissionHelper::abort_if_unless_permission('updateEventForOtherUser');
             $user = Auth::user();
         }
-        $calendar_id = $user->tokens()->where('type' , GoogleCalendarToken::TYPE_CALENDAR)->firstOrFail()->calendar_id;
-        try {
-            $params = $request->only(['summary' , 'location' , 'description' , 'start.dateTime' , 'start.timeZone' , 'end.dateTime' , 'end.timeZone']);
-            return response()->json(GoogleCalendar::updateEvent($calendar_id , $id , $params ));
-        }catch (\Exception $e){
-            abort(404);
+        $event = Event::query()->where('owner_id', $user->id)->where('id' , $id)->firstOrFail();
+
+        $model =$event->fill($request->only(["start","end",'resource']))->save();
+        $event->refresh();
+        if ($model){
+            $time = \Morilog\Jalali\Jalalian::forge($event->start)->format('H:i');
+            $date = \Morilog\Jalali\Jalalian::forge($event->resource)->format('Y/m/d ');
+            NotificationHelper::createNotificationWithEmail($event->user_id, $event->user_id, 'نوبت  شما ویرایش شد', "{$user->name} نوبت  شما را  به تاریخ {$date} {$time} انتقال داد.");
         }
+        return $model;
     }
 
     /**
@@ -110,18 +136,17 @@ class CalendarEventController extends Controller
     public function destroy($id , $user_id = false)
     {
         if ($user_id){
-            PermissionHelper::abort_if_unless_permission('showEvent');
+            PermissionHelper::abort_if_unless_permission('showEventForOtherUser');
             $user = User::query()->findOrFail($user_id);
         }else{
-            PermissionHelper::abort_if_unless_permission('showEventForOtherUser');
+            PermissionHelper::abort_if_unless_permission('showEvent');
             $user = Auth::user();
         }
-        $calendar_id = $user->tokens()->where('type' , GoogleCalendarToken::TYPE_CALENDAR)->firstOrFail()->calendar_id;
-        try {
-            return response()->json(GoogleCalendar::deleteEvent($calendar_id , $id));
-        }catch (\Exception $e){
-            abort(404);
+        $event = Event::query()->where('owner_id', $user->id)->where('id', $id)->firstOrFail();
+        $model =  $event->delete();
+        if ($model){
+            NotificationHelper::createNotificationWithEmail($event->user_id, $event->user_id, 'نوبت  شما حذف شد', "{$user->name} نوبت شما را حذف کرد.");
         }
-
+        return $model;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1\Resume;
 
+use App\Helpers\FileHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResumeStoreRequest;
@@ -24,9 +25,21 @@ class ResumeController extends Controller
 
         return ResumeResource::collection(
             Resume::query()
-            ->select(['id' , 'name' , 'status' , 'created_at' , 'updated_at'])
-            ->where('user_id' , Auth::id())
-            ->paginate()
+                ->select(['id' , 'name' , 'status' , 'created_at' , 'updated_at', 'extras->redirect_to as redirect_to'])
+                ->where('user_id' , Auth::id())
+                ->paginate()
+        );
+    }
+
+    public function nameId()
+    {
+        PermissionHelper::abort_if_unless_permission("resume_own_list");
+
+        return ResumeResource::collection(
+            Resume::query()
+                ->select(['id' , 'name'])
+                ->where('user_id' , Auth::id())
+                ->get()
         );
     }
 
@@ -39,6 +52,8 @@ class ResumeController extends Controller
     public function store(ResumeStoreRequest $request)
     {
         PermissionHelper::abort_if_unless_permission("resume_own_create");
+
+        FileHelper::UploadAllowFields($request , ['data']);
 
         $merge = ['user_id' => Auth::id()];
         if ($request->has('redirect_to')){
@@ -75,6 +90,8 @@ class ResumeController extends Controller
     public function update(ResumeUpdateRequest $request, Resume $resume)
     {
         PermissionHelper::abort_if_unless_permission_with_own_model("resume_own_edit" , $resume);
+
+        FileHelper::UploadAllowFields($request , ['data']);
 
         if ($request->has('redirect_to')){
             $request = $request->merge(['extras' => ['redirect_to' => $request->get('redirect_to')]]);

@@ -16,7 +16,7 @@ class ResumeShowController extends Controller
                 case Resume::STATUS_PUBLISH:
                     return new ResumeResource($resume);
                 case Resume::STATUS_REDIRECT:
-                    $resume = Resume::query()->findOrFail($resume->extras->redirecto_to);
+                    $resume = Resume::query()->findOrFail($resume->extras['redirect_to']);
                     break;
                 default:
                     abort(404);

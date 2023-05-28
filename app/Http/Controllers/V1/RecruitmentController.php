@@ -22,6 +22,10 @@ class RecruitmentController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if($request->has('own') && !Auth::guard('api')->check() , 403);
+
+        if ($request->has('own')) $request->merge(['userId' => Auth::guard('api')->id()]);
+
 //        TODO: apply filters for skills and categories
 //        $skills = @json_decode($request->input('skills'));
 
@@ -48,7 +52,19 @@ class RecruitmentController extends Controller
             })
             ->when($request->input('province'), function ($query, $province) {
                 /** @var Builder $query */
-                $query->where('province', '=', $province);
+                $query->where('province', 'like', "%\"{$province}\"%");
+            })
+            ->when($request->input('userId'), function ($query, $user_id) {
+                /** @var Builder $query */
+                $query->where('user_id', '=', $user_id);
+            })
+            ->when($request->input('text'), function ($query, $text) {
+                /** @var Builder $query */
+                $query->where('title', 'like', "%${text}%");
+            })
+            ->when(!$request->input('own'), function ($query, $text) {
+                /** @var Builder $query */
+                $query->where('status', '=', Recruitment::STATUS_PUBLISH);
             })
             ->with('user')->advancedFilter();
     }
