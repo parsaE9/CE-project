@@ -24,13 +24,10 @@ class CalendarEvnetRequest extends FormRequest
     public function rules()
     {
         return [
-            "summary" => ['string' , 'min:2' , 'max:256'],
-            "location" => ['string' , 'min:2' , 'max:512'],
-            "description" => ['string' , 'min:2' , 'max:512'],
-            "start.dateTime" => ['required' , 'date'],
-            'start.timeZone' => ['required' , 'string' , 'timezone'],
-            "end.dateTime" => ['required' , 'date'],
-            'end.timeZone' => ['required' , 'string' , 'timezone'],
+            "user_id" => ['required', 'exists:users,id'],
+            "start" => ['required', 'string'],
+            "end" => ['required', 'string'],
+            'resource' => ['required', 'string']
         ];
     }
 }

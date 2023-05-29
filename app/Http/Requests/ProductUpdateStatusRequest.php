@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CalendarUpdateEvnetRequest extends FormRequest
+class ProductUpdateStatusRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class CalendarUpdateEvnetRequest extends FormRequest
     public function rules()
     {
         return [
-            "start" => ['required', 'string'],
-            "end" => ['required', 'string'],
-            'resource' => ['required', 'string']
+            'status' => ['required' , 'in:publish,draft,disable']
         ];
     }
 }

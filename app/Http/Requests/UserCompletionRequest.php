@@ -17,12 +17,13 @@ class UserCompletionRequest extends FormRequest
     public function authorize()
     {
         if (Auth::user()->type){
-            $this->replace(['type' => Auth::user()->type]);
+            $this->merge(['type' => Auth::user()->type]);
         }
 
         if ($this->has('status')){
             PermissionHelper::abort_if_unless_permission('user_completion_change_status');
         }
+
         return true;
     }
 
@@ -60,7 +61,7 @@ class UserCompletionRequest extends FormRequest
             'code' => ['required', 'string'],
             'address' => ['required' , 'string' , 'min:5' , 'max:1024'],
             'avatar' => ['required', 'max:4096'],
-            'background' => ['array' , 'required', 'string' , 'min:2' , 'max:256']
+            'background' => ['required', 'string' , 'min:2' , 'max:256']
         ];
 
         $employer = [
@@ -68,8 +69,8 @@ class UserCompletionRequest extends FormRequest
             'phones' => ['required', 'array'],
             'phones.*' => ['phone'],
             'licence_code' => ['required' , 'string' , 'min:2' , 'max:20'],
-            'licence_document' => ['required' , 'max:4096'],
-            'background' => ['array' , 'required', 'string' , 'min:2' , 'max:256']
+            'licence_document' => ['max:4096'],
+            'background' => ['required', 'string' , 'min:2' , 'max:256']
         ];
 
         return match ($this->get('type')) {
