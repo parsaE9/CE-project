@@ -58,6 +58,6 @@ class Recruitment extends Model
 
     public function requests()
     {
-        return $this->belongsToMany(Resume::class, 'resume_recruitment', 'recruitment_id', 'resume_id')->withPivot('status');
+        return $this->belongsToMany(Resume::class, 'resume_recruitment', 'recruitment_id', 'resume_id')->withPivot('status', 'created_at');
     }
 }

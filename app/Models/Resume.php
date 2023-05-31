@@ -43,7 +43,8 @@ class Resume extends Model
     ];
 
     protected $casts = [
-      'extras' => 'array'
+        'extras' => 'array',
+        'data' => 'array'
     ];
 
 

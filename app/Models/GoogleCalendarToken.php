@@ -29,7 +29,7 @@ class GoogleCalendarToken extends Model
 
 
     protected $casts =[
-      'expire_at' => 'datetime'
+        'expire_at' => 'datetime'
     ];
 
     public function fillWithArray($array)

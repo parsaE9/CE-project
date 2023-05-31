@@ -5,20 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Product extends Model
 {
     use HasFactory;
 
+    const STATUS_PUBLISH = "publish";
+    const STATUS_DISABLE = "disable";
+    const STATUS_DRAFT = "draft";
+
+
     protected $fillable = [
         'user_id',
-        'data'
+        'name',
+        'data',
+        'status'
     ];
 
     protected $casts=[
-        'data'=>'array'
+      'data' => 'array'
     ];
-
-    public function users(){
-        return $this->belongsTo(User::class , 'user_id' , 'id');
-    }
 }

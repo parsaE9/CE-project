@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Casts\HashCast;
+use App\Casts\JsonCast;
 use App\Helpers\HasAdvancedFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -86,7 +87,7 @@ class User extends Authenticatable
     }
 
     public function requests(){
-       return $this->belongsToMany(Recruitment::class , 'resume_recruitment' , 'user_id' , 'recruitment_id')->withPivot(['status as request_status' , 'resume_id' , 'created_at as requested_at']);
+        return $this->belongsToMany(Recruitment::class , 'resume_recruitment' , 'user_id' , 'recruitment_id')->withPivot(['status as request_status' , 'resume_id' , 'created_at as requested_at']);
     }
 
     public function tokens()
