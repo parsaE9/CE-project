@@ -14,8 +14,14 @@ return new class extends Migration
     public function up()
     {
         /** @var \App\Models\Role $basicRule */
-        $basicRule = \App\Models\Role::create([
+        $otherBasicRule = \App\Models\Role::create([
             'name' => 'basic',
+            'display_name' => 'Basic permissions',
+            'description' => 'Basic permission for users not complete his profile',
+        ]);
+
+        $basicRule = \App\Models\Role::create([
+            'name' => 'user',
             'display_name' => 'Basic permissions',
             'description' => 'Basic permission for users not complete his profile',
         ]);

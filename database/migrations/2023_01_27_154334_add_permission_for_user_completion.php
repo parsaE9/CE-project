@@ -18,12 +18,12 @@ return new class extends Migration
         $user_completion_store = \App\Helpers\PermissionHelper::create_permission('user_completion_store' , 'تغیر وضعیت اطلاعات کابر' , '');
 
         \App\Helpers\PermissionHelper::get_role_or_create('basic')->attachPermissions([
-           $user_completion_store,
-           $user_completion_update
+            $user_completion_store,
+            $user_completion_update
         ]);
 
         \App\Helpers\PermissionHelper::get_role_or_create('admin')->attachPermissions([
-           $user_completion_change_status,
+            $user_completion_change_status,
             $user_completion_store,
             $user_completion_update
         ]);

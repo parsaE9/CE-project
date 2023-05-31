@@ -19,17 +19,21 @@ return new class extends Migration
         $page_show = \App\Helpers\PermissionHelper::create_permission('page_show' , 'دریافت اطلاعات صفحه به صورت تکی', '');
 
         \App\Helpers\PermissionHelper::get_role_or_create('basic')->attachPermissions([
-           $page_show
+            $page_show
         ]);
 
         \App\Helpers\PermissionHelper::get_role_or_create('employer')->attachPermissions([
             $page_store_own,
         ]);
 
+        \App\Helpers\PermissionHelper::get_role_or_create('company')->attachPermissions([
+            $page_store_own,
+        ]);
+
         \App\Helpers\PermissionHelper::get_role_or_create('admin')->attachPermissions([
-           $page_store_own,
-           $page_store,
-           $page_list,
+            $page_store_own,
+            $page_store,
+            $page_list,
         ]);
 
     }

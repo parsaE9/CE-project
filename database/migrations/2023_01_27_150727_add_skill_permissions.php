@@ -28,21 +28,21 @@ return new class extends Migration
 
         $skill_list = \App\Helpers\PermissionHelper::create_permission(
             'skill_list',
-             'لیست مهارت',
+            'لیست مهارت',
             'با این دسترسی کاربر قادر به دریافت لیست مهارت ها میباشد.'
 
         );
 
         $skill_update = \App\Helpers\PermissionHelper::create_permission(
-             'skill_update',
-           'به روز رسانی مهارت',
-             'با این دسترسی کاربر قادر به به روز رسانی اطلاعات یک  مهارت ها موجود میباشد.'
+            'skill_update',
+            'به روز رسانی مهارت',
+            'با این دسترسی کاربر قادر به به روز رسانی اطلاعات یک  مهارت ها موجود میباشد.'
         );
 
         $skill_delete = \App\Helpers\PermissionHelper::create_permission(
             'skill_delete',
             'حذف مهارت',
-        'با این دسترسی کاربر قادر به حذف مهارت ها میباشد.'
+            'با این دسترسی کاربر قادر به حذف مهارت ها میباشد.'
         );
 
 

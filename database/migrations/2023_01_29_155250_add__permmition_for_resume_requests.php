@@ -22,14 +22,14 @@ return new class extends Migration
         $resume_request_list = \App\Helpers\PermissionHelper::create_permission('resume_request_list', 'دریافت لیست رزومه های ارسالی تمامی کاربران');
 
         \App\Helpers\PermissionHelper::get_role_or_create('user')->attachPermissions([
-           $resume_request_request_own,
-           $resume_request_delete_request_own
+            $resume_request_request_own,
+            $resume_request_delete_request_own
         ]);
 
         \App\Helpers\PermissionHelper::get_role_or_create('admin')->attachPermissions([
-           $resume_request_request,
-           $resume_request_delete_request,
-           $resume_request_list
+            $resume_request_request,
+            $resume_request_delete_request,
+            $resume_request_list
         ]);
     }
 
