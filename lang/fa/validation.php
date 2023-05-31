@@ -184,7 +184,21 @@ return [
         'service_id' => 'سرویس',
         'province' => 'استان',
         'status' => 'وضعیت',
-        'redirect_to' => 'فیلد تغیر جهت'
+        'redirect_to' => 'فیلد تغیر جهت',
+        'about' => 'درباره',
+        'avatar' => 'آوانار',
+        'code' => 'کد',
+        'background' => 'پیشینه',
+        'nationalCode' => 'کد ملی',
+        'certificates' => 'مدارک',
+        'phones' => 'تلفن ها',
+        'licence_code' => 'کد مجوز',
+        'position' => 'موقعیت',
+        'skills' => 'مهارت ها',
+        'salary' => 'دست مزد',
+        'categories' => 'دسته بندی ها',
+        'contract' => 'نوع قرار داد',
+        'experience' => 'سابقه',
     ],
     //ترجمه های جدید خود را در این آرایه قرار دهید
 
