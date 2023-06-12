@@ -2,12 +2,22 @@
 
 use App\Http\Controllers\V1\Admin\UserController;
 use App\Http\Controllers\V1\Auth\UserAuthController;
+use App\Http\Controllers\V1\NotificationsController;
 use App\Http\Controllers\V1\Resume\ResumeController;
 use App\Http\Controllers\V1\Resume\ResumeShowController;
 use App\Http\Controllers\V1\TicketController;
 use App\Http\Middleware\UserCompletionCheck;
+use App\Models\Notif;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+/**
+ * Products
+ */
+Route::get('products/my', [\App\Http\Controllers\V1\ProductsController::class,'myIndex']);
+Route::post('products/update/status/{id}', [\App\Http\Controllers\V1\ProductsController::class,'updateStatus']);
+Route::get('products/update/{id}', [\App\Http\Controllers\V1\ProductsController::class,'showForEdit']);
+Route::apiResource('products', \App\Http\Controllers\V1\ProductsController::class)->only('store', 'update' , 'delete');
 
 /**
  * Route Without need authentication
@@ -36,6 +46,13 @@ Route::withoutMiddleware(['auth:api' , UserCompletionCheck::class])->group(funct
      */
     Route::apiResource('province' , \App\Http\Controllers\V1\ProvinceController::class)->only(['index',  'show']);
     Route::apiResource('cities' , \App\Http\Controllers\V1\CityController::class)->only(['index' , 'show' , 'store']);
+
+    Route::apiResource('recruitment' , \App\Http\Controllers\V1\RecruitmentController::class )->only(['show', 'index']);
+    Route::apiResource('skill' , \App\Http\Controllers\V1\SkillsController::class)->only('index');
+    Route::apiResource('category' , \App\Http\Controllers\V1\CategoryController::class)->only('index');
+
+    Route::apiResource('products', \App\Http\Controllers\V1\ProductsController::class)->only('index', 'show');
+
 });
 
 /**
@@ -45,9 +62,10 @@ Route::withoutMiddleware(['auth:api' , UserCompletionCheck::class])->group(funct
 Route::withoutMiddleware(UserCompletionCheck::class)->group(function (){
     Route::apiResource('user' , \App\Http\Controllers\V1\UserController::class)->only('index');
     Route::apiResource('userCompletion' , \App\Http\Controllers\V1\UserCompletion::class)->only('store');
-    Route::apiResource('skill' , \App\Http\Controllers\V1\SkillsController::class);
-    Route::apiResource('category' , \App\Http\Controllers\V1\CategoryController::class);
+    Route::apiResource('skill' , \App\Http\Controllers\V1\SkillsController::class)->only('store','update','show','destroy');
+    Route::apiResource('category' , \App\Http\Controllers\V1\CategoryController::class)->only('store','update','show','destroy');
     Route::apiResource('ticket' , TicketController::class);
+    Route::apiResource('notifications' , NotificationsController::class)->only(['index','show']);
     Route::post("conversation", [TicketController::class, "message"])->name('conversation.store');
 
 
@@ -57,9 +75,9 @@ Route::withoutMiddleware(UserCompletionCheck::class)->group(function (){
     Route::get('permissions' , function (){
         /** @var \App\Models\User $user */
 
-       $user = \Illuminate\Support\Facades\Auth::user();
+        $user = \Illuminate\Support\Facades\Auth::user();
 
-       return $user->allPermissions();
+        return $user->allPermissions();
     });
 });
 
@@ -70,6 +88,7 @@ Route::withoutMiddleware(UserCompletionCheck::class)->group(function (){
  */
 Route::apiResource('resume' , ResumeController::class)->only('index' , 'store' , 'show' , 'destroy');
 Route::post("resume/{resume}" , [ResumeController::class , 'update']);
+Route::get('resume_name_id' ,[ \App\Http\Controllers\V1\Resume\ResumeController::class, 'nameId']);
 
 /**
  * Pages
@@ -80,6 +99,7 @@ Route::apiResource('page' , \App\Http\Controllers\V1\PageController::class)->onl
  * Resume requests
  */
 Route::apiResource('resumeRequest' , \App\Http\Controllers\V1\ResumeRequestController::class)->only(['index' , 'store' , 'destroy']);
+Route::get('resumeRequestAll' , [\App\Http\Controllers\V1\ResumeRequestController::class, 'indexAll']);
 
 /**
  * Recruitment Requests
@@ -90,7 +110,11 @@ Route::apiResource('recruitmentRequest' , \App\Http\Controllers\V1\RecruitmentRe
  * Recruitment List
  */
 Route::put('recruitment/status/{recruitment}' , [\App\Http\Controllers\V1\RecruitmentController::class , 'updateStatus'] );
-Route::resource('recruitment' , \App\Http\Controllers\V1\RecruitmentController::class )->withoutMiddleware(UserCompletionCheck::class)->names('recruitment');
+Route::resource('recruitment' , \App\Http\Controllers\V1\RecruitmentController::class )
+    ->withoutMiddleware(UserCompletionCheck::class)
+    ->names('recruitment')
+    ->only(['store','update','destroy']);
+
 
 /**
  * Admin Route Group
@@ -103,14 +127,15 @@ Route::prefix('admin')->withoutMiddleware(UserCompletionCheck::class)->group(fun
 });
 
 Route::get('report' , function (){
-   return [
-       'companyCount' => \App\Models\User::query()->where('type' , 'company')->count(),
-       'activeRecruitment' => \App\Models\Recruitment::query()->where('status' , \App\Models\Recruitment::STATUS_PUBLISH)->count()
-   ];
+    return [
+        'companyCount' => \App\Models\User::query()->where('type' , 'company')->count(),
+        'activeRecruitment' => \App\Models\Recruitment::query()->where('status' , \App\Models\Recruitment::STATUS_PUBLISH)->count()
+    ];
 });
 
 Route::apiResource('companies' , \App\Http\Controllers\CompanyEmployerListController::class)->only('index');
 
+Route::get('google/calander/user/info', [\App\Http\Controllers\V1\Google\CalendarEventController::class, 'other']);
 Route::get('google/calendar/connect/save' , [\App\Http\Controllers\V1\Google\CalendarConnectController::class , 'store'])->name("google_calendar.save");
 Route::get('google/calendar/connect' , [\App\Http\Controllers\V1\Google\CalendarConnectController::class , 'index'])->name("google_calendar.index");
 Route::get('google/calendar/user/list' , [\App\Http\Controllers\V1\Google\CalendarConnectController::class , 'users']);
