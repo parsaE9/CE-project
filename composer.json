@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.8",
         "mohammad-fouladgar/eloquent-builder": "^4.1",
+        "morilog/jalali": "^3.4",
         "santigarcor/laratrust": "^7.1"
     },
     "require-dev": {
